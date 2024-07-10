@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>solitaire-mmg</artifactId>
+    <version>1.0</version>
+
+    <parent>
+        <groupId>maurelio-com-br</groupId>
+        <artifactId>csharp-parent-production</artifactId>
+        <version>1.0</version>
+        <!-- The line below isn't necessary. Execute 'mvn install' on parent POM first. -->
+        <!-- <relativePath>../../pom.xml</relativePath>-->
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>maurelio-com-br</groupId>
+            <artifactId>pdfium-mmg</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>maurelio-com-br</groupId>
+            <artifactId>custom-presentation</artifactId>
+            <version>1.2</version>
+        </dependency>
+    </dependencies>
+</project>
