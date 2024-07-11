@@ -283,7 +283,7 @@ namespace Solitaire
             this.MainMenuStrip = this.mainMenu;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Solitaire";
+            this.Text = "MMG Solitaire";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);

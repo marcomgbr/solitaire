@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Linq;
 using MMG.Forms;
 using Solitaire.Common;
 
@@ -43,7 +44,22 @@ namespace Solitaire
             tableauPiles.Add(new TableauPile(parent, this.deck.DrawCards(6)));
             tableauPiles.Add(new TableauPile(parent, this.deck.DrawCards(7)));
 
+            foreach(var tableauPile in tableauPiles)
+            {
+                tableauPile.TableauPiles = this.tableauPiles.ToList<ACardPile>();
+                foreach (var pair in this.buildPiles)
+                {
+                    tableauPile.BuildPiles.Add(pair.Key, pair.Value);
+                }
+            }
+
             this.wastePile = new WastePile(parent);
+            this.wastePile.TableauPiles = this.tableauPiles.ToList<ACardPile>();
+            foreach (var pair in this.buildPiles)
+            {
+                this.wastePile.BuildPiles.Add(pair.Key, pair.Value);
+            }
+            
             this.stockPile = new StockPile(parent, this.deck.DrawAllCards(), this.wastePile);
         }
 
@@ -70,65 +86,6 @@ namespace Solitaire
             buildPiles[Suit.Hearts]  .DoLayout(cardSize, new Point(tableauPiles[6].Left, this.stockPile.Top));
         }
 
-        public void SendToSuitablePile(Card src)
-        {
-            if (!SendToBuild(src))
-            {
-                int index = FindASuitableTableau(src);
-                if (index > -1)
-                {
-                    tableauPiles[index].Add(src.Pile.RemoveToEnd(src));
-                }
-            }
-        }
-
-        public bool SendToBuild(Card src)
-        {
-            bool response = false;
-            if (CanAddToBuild(src))
-            {
-                ImageTransition transition = new ImageTransition(src, buildPiles[src.Suit].Location, 40);
-                transition.GoToDestination();
-                buildPiles[src.Suit].Add(src.Pile.RemoveToEnd(src));
-                response = true;
-            }
-            return response;
-        }
-
-        public bool CanAddToBuild(Card src)
-        {
-            if (src.IsOnPileBottom())
-            {
-                if (!src.Pile.GetType().Equals(typeof(BuildPile)))
-                {
-                    if (buildPiles[src.Suit].CanAddToPile(src))
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private int FindASuitableTableau(Card src)
-        {
-            int response = -1;
-
-            for (int i = 0; i < tableauPiles.Count; i++)
-            {
-                if (tableauPiles[i] != src.Pile)
-                {
-                    if (tableauPiles[i].CanAddToPile(src))
-                    {
-                        response = i;
-                    }
-                }
-            }
-
-            return response;
-        }
-
         public void SendAllToBuildPiles()
         {
             bool sentToBuild = false;
@@ -143,7 +100,7 @@ namespace Solitaire
             }
             while (sentToBuild);
 
-            while (this.wastePile.SendTopToBuild());
+            while (this.wastePile.SendTopToBuild())
             {
             }
         }

@@ -67,7 +67,8 @@ namespace Solitaire
             bool response = this.cards.Count > 0;
             if (response)
             {
-                response = GameSession.Instance.Controller.SendToBuild(this.cards.Last());
+                response = SendToBuild(this.cards.Last());
+                //response = GameSession.Instance.Controller.SendToBuild(this.cards.Last());
             }
 
             return response;

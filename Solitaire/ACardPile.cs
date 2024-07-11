@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Solitaire.Common;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace Solitaire
     public abstract class ACardPile : Panel
     {
         protected List<Card> cards;
+        public List<ACardPile> TableauPiles { get; set; }
+        public Dictionary<Suit, ACardPile> BuildPiles { get; private set; } = new Dictionary<Suit, ACardPile>();
 
         public ACardPile(Control parent, List<Card> cards)
         {
@@ -23,8 +26,67 @@ namespace Solitaire
             {
                 item.Pile = this;
             }
-
+            
             this.DragLeave += CardPile_DragLeave; this.BorderStyle = BorderStyle.None;
+        }
+
+        public void SendToSuitablePile(Card src)
+        {
+            if (!SendToBuild(src))
+            {
+                int index = FindASuitableTableau(src);
+                if (index > -1)
+                {
+                    TableauPiles[index].Add(src.Pile.RemoveToEnd(src));
+                }
+            }
+        }
+
+        public bool SendToBuild(Card src)
+        {
+            bool response = false;
+            if (CanAddToBuild(src))
+            {
+                ImageTransition transition = new ImageTransition(src, BuildPiles[src.Suit].Location, 40);
+                transition.GoToDestination();
+                BuildPiles[src.Suit].Add(src.Pile.RemoveToEnd(src));
+                response = true;
+            }
+            return response;
+        }
+
+        public bool CanAddToBuild(Card src)
+        {
+            if (src.IsOnPileBottom())
+            {
+                if (!src.Pile.GetType().Equals(typeof(BuildPile)))
+                {
+                    if (BuildPiles[src.Suit].CanAddToPile(src))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private int FindASuitableTableau(Card src)
+        {
+            int response = -1;
+
+            for (int i = 0; i < TableauPiles.Count; i++)
+            {
+                if (TableauPiles[i] != src.Pile)
+                {
+                    if (TableauPiles[i].CanAddToPile(src))
+                    {
+                        response = i;
+                    }
+                }
+            }
+
+            return response;
         }
 
         protected void CardPile_DragLeave(object sender, EventArgs e)

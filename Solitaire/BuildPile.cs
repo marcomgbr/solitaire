@@ -11,7 +11,7 @@ namespace Solitaire
     /**
      * The pile that will contain a whole suit of cards.
      */
-    class BuildPile : ACardPile
+    public class BuildPile : ACardPile
     {
         public BuildPile(Control parent, Suit suit) : base(parent, new List<Card>())
         {

@@ -162,7 +162,8 @@ namespace Solitaire
 
         private void Card_DoubleClick(object sender, EventArgs e)
         {
-            GameSession.Instance.Controller.SendToSuitablePile((Card)sender);
+            this.Pile.SendToSuitablePile(this);
+            //GameSession.Instance.Controller.SendToSuitablePile((Card)sender);
         }
 
         private void Card_DragEnter(object sender, DragEventArgs e)

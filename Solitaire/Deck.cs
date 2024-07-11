@@ -54,7 +54,7 @@ namespace Solitaire
                     cards.Add(card);
                 }
 
-                //Shuffle();
+                Shuffle();
             }
             catch (Exception e)
             {
