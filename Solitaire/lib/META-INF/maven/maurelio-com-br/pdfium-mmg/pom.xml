@@ -14,10 +14,10 @@
     </parent>
 
     <dependencies>
-<!--        <dependency>
+        <dependency>
             <groupId>maurelio-com-br</groupId>
-            <artifactId>primary-dll</artifactId>
-            <version>1.0</version>
-        </dependency>-->
+            <artifactId>custom-presentation</artifactId>
+            <version>1.2</version>
+        </dependency>
     </dependencies>
 </project>

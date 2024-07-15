@@ -15,4 +15,15 @@
 
     <dependencies>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>marcogithub-repo</id>
+            <url>https://maven.pkg.github.com/marcomgbr/maven-repo1</url>
+        </repository>
+        <snapshotRepository>
+            <id>marcogithub-repo</id>
+            <url>https://maven.pkg.github.com/marcomgbr/maven-repo1</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

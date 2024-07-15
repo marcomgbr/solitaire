@@ -110,6 +110,10 @@ namespace Solitaire
         public void UpdateTime()
         {
             this.GameDuration = DateTime.Now - this.gameStart;
+            if (this.GameDuration.Seconds % 30 == 0)
+            {
+                Score--;
+            }
             this.timeStatusLabel.Text = " Time: " + this.GameDuration.ToString().Substring(0, 8);
         }
 
